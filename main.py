@@ -1,12 +1,12 @@
-import requests
 import utils
 
 if __name__ == '__main__':
     # Получение всех пользователей и задач
     all_users, all_tasks = utils.get_users_and_tasks("https://json.medrocket.ru/users",
                                                      "https://json.medrocket.ru/todos")
-    # Создание директории с отчетами
+    # Создание директорий с отчетами
     utils.create_dir_if_not_exist("tasks")
+
     for user in all_users:
         # Проверка папки пользователя с отчетами
         user_path = f"tasks/{user['name']}"

@@ -26,9 +26,10 @@ def create_dir_if_not_exist(path: str = "") -> None:
 def generate_report(user: dict, comp_tasks: list[dict], exp_tasks: list[dict]) -> str:
     # Получение даты на момент создания отчета
     time_now = datetime.now()
+    company, username, email = user["company"]["name"], user["name"], user["email"]
     # Шапка отчета
-    header_report = f'''Отчёт для {user["company"]["name"]}.
-{user["name"]} <{user["email"]}> {time_now.day}.{time_now.month}.{time_now.year} {time_now.hour}:{time_now.minute}
+    header_report = f'''Отчёт для {company}.
+{username} <{email}> {time_now.day:02d}.{time_now.month:02d}.{time_now.year} {time_now.hour:02d}:{time_now.minute:02d}
 Всего задач: {len(comp_tasks) + len(exp_tasks)}\n\n'''
     # Завершенные задачи отчета
     comp_report = f'Завершенные задачи ({len(comp_tasks)}):\n'
@@ -70,6 +71,7 @@ def rename_old_report(user_path: str, file_name: str) -> None:
     # Получение нормальной даты создания отчета
     n_time = datetime.fromtimestamp(c_time_report)
     # Генерация имени старого отчета
-    old_report_name = f'old_{file_name}_{n_time.year}-{n_time.month}-{n_time.day}T{n_time.hour}:{n_time.minute}.txt'
+    old_report_name = f'old_{file_name}_{n_time.year}-{n_time.month:02d}-{n_time.day:02d}T{n_time.hour:02d}:' \
+                      f'{n_time.minute:02d}.txt'
     # Переименовывание старого отчета
     os.rename(f"{user_path}/{file_name}.txt", f"{user_path}/{old_report_name}")
